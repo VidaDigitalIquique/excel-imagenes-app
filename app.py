@@ -35,10 +35,21 @@ if uploaded_file:
             workbook = xlsxwriter.Workbook(output, {'in_memory': True})
             worksheet = workbook.add_worksheet()
 
-            # Títulos
+            # Estilo de encabezado
+            header_format = workbook.add_format({
+                'bold': True,
+                'align': 'center',
+                'valign': 'vcenter',
+                'bg_color': '#d9e1f2',
+                'text_wrap': True
+            })
+
+            # Títulos en mayúsculas
             headers = ["IMG", "CODE", "DETAILS", "TOTAL CTNS", "NOTES"]
             for col_num, header in enumerate(headers):
-                worksheet.write(0, col_num, header)
+                worksheet.write(0, col_num, header.upper(), header_format)
+                worksheet.set_column(col_num, col_num, 20)  # ancho inicial
+                worksheet.set_column(col_num, col_num, 130, None)  # ancho exacto en píxeles
 
             row = 1
             for img_path in image_files:
@@ -49,7 +60,7 @@ if uploaded_file:
                 img.save(img_byte_arr, format='PNG')
                 img_byte_arr.seek(0)
 
-                worksheet.set_row(row, 220)  # altura de fila
+                worksheet.set_row(row, 130)  # altura de fila más moderada
 
                 worksheet.insert_image(row, 0, img_path, {
                     'image_data': img_byte_arr,
