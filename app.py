@@ -49,7 +49,7 @@ if uploaded_file:
             for col_num, header in enumerate(headers):
                 worksheet.write(0, col_num, header.upper(), header_format)
                 worksheet.set_column(col_num, col_num, 20)  # ancho inicial
-                worksheet.set_column(col_num, col_num, 130, None)  # ancho exacto en píxeles
+                worksheet.set_column(col_num, col_num, 25, None)  # ancho exacto en píxeles
 
             row = 1
             for img_path in image_files:
